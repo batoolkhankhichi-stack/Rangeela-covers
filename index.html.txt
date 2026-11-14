@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rangeela Covers</title>
+</head>
+<body>
+<style>
+/* Layout: header brand band, then two-column studio (live preview left, order controls right); stacks on phones */
+:root{
+  --bg:#FFF8E7; --surface:#ffffff; --ink:#2B1B2E; --muted:#6b5a6e; --line:#ead9c0;
+  --magenta:#C2185B; --orange:#F57C00; --teal:#00796B; --on-brand:#FFF8E7;
+  --font:Arial,Helvetica,'Liberation Sans',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1220;--surface:#2a1a2e;--ink:#fbeedd;--muted:#c9b3c5;--line:#47304b;--magenta:#ee5a95;--orange:#ffa040;--teal:#35c2b0;--on-brand:#2B1B2E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d1220;--surface:#2a1a2e;--ink:#fbeedd;--muted:#c9b3c5;--line:#47304b;--magenta:#ee5a95;--orange:#ffa040;--teal:#35c2b0;--on-brand:#2B1B2E;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 32px}
+.wrap{max-width:1000px;margin:0 auto}
+header{display:flex;align-items:center;gap:14px;padding-block:18px}
+header svg{flex:none}
+h1{margin:0;font-size:26px;line-height:1.1;font-weight:700;color:var(--magenta)}
+h1 span{color:var(--teal)}
+.tag{margin:2px 0 0;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:20px;align-items:start}
+@media(max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.panel h2{margin:0 0 12px;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal)}
+.stage{display:flex;justify-content:center;align-items:center;gap:18px;min-height:380px;padding:10px}
+.cover{position:relative;width:150px;height:300px;border-radius:30px;overflow:hidden;box-shadow:0 14px 30px rgba(43,27,46,.3);transition:background .25s;flex:none}
+.cover .cam{position:absolute;left:12px;top:12px;width:44px;height:44px;border-radius:13px;background:#2B1B2E}
+.cover .txt{position:absolute;left:6px;right:6px;top:50%;transform:translateY(-50%);text-align:center;font-weight:700;word-break:break-word;line-height:1.1}
+.cover .deco{position:absolute;inset:0}
+.cover.small{width:120px;height:240px}
+.hint{text-align:center;color:var(--muted);font-size:13px;margin:4px 0 0}
+label,.lbl{display:block;font-weight:600;font-size:13px;margin:14px 0 6px}
+.lbl:first-of-type{margin-top:0}
+select,input[type=text]{width:100%;font:inherit;padding:11px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.styles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.opt{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px;font:inherit;text-align:left;cursor:pointer}
+.opt b{display:block;font-size:13px}
+.opt small{color:var(--muted)}
+.opt[aria-pressed=true]{border-color:var(--magenta);background:var(--magenta);color:#fff}
+.opt[aria-pressed=true] small{color:#ffe3ee}
+.sw{display:flex;gap:10px;flex-wrap:wrap}
+.sw button{width:38px;height:38px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 0 0 1.5px var(--line);cursor:pointer}
+.sw button[aria-pressed=true]{box-shadow:0 0 0 3px var(--magenta)}
+.row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border:0}
+.row span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+.total{font-size:20px;color:var(--magenta)}
+.check{display:flex;gap:10px;align-items:center;margin-top:14px;font-weight:600}
+.check input{width:20px;height:20px;accent-color:var(--magenta)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:50px;padding:13px 22px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.p{background:var(--magenta);color:#fff}
+.btn.s{background:var(--teal);color:#fff}
+.msg{min-height:20px;font-size:13px;color:var(--teal);margin:10px 0 0}
+pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;font:13px/1.5 var(--font);margin:12px 0 0}
+footer{margin-top:20px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+
+<div class="wrap">
+<header>
+  <svg width="40" height="54" viewBox="0 0 270 500" aria-hidden="true">
+    <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C2185B"/><stop offset="1" stop-color="#F57C00"/></linearGradient></defs>
+    <rect width="270" height="500" rx="62" fill="url(#lg)"/><rect x="40" y="40" width="86" height="86" rx="24" fill="#2B1B2E"/>
+    <g transform="translate(135,300)" fill="#FFF8E7"><circle cy="-62" r="42"/><circle cx="54" cy="-31" r="42"/><circle cx="54" cy="31" r="42"/><circle cy="62" r="42"/><circle cx="-54" cy="31" r="42"/><circle cx="-54" cy="-31" r="42"/><circle r="38" fill="#00796B"/><circle r="16"/></g>
+  </svg>
+  <div><h1>Rangeela <span>Covers</span></h1><p class="tag">Your Phone, Your Story. Design your cover and order today.</p></div>
+</header>
+
+<div class="grid">
+  <section class="panel" aria-label="Live cover preview">
+    <h2>Live preview</h2>
+    <div class="stage" id="stage"></div>
+    <p class="hint" id="hint"></p>
+  </section>
+
+  <section class="panel" aria-label="Design your cover">
+    <h2>Design your cover</h2>
+    <span class="lbl">1. Choose a style</span>
+    <div class="styles" id="styles"></div>
+
+    <label for="model">2. Phone model</label>
+    <select id="model"></select>
+
+    <label for="name">3. Name or short text (Urdu, English or Arabic)</label>
+    <input type="text" id="name" maxlength="18" value="Ayesha" autocomplete="off">
+
+    <span class="lbl">4. Cover colour</span>
+    <div class="sw" id="sw"></div>
+
+    <div class="check"><input type="checkbox" id="rush"><label for="rush" style="margin:0">Rush order (24 to 48 hours), +Rs. 150</label></div>
+  </section>
+</div>
+
+<section class="panel" style="margin-top:20px" aria-label="Order summary">
+  <h2>Your order</h2>
+  <div class="row"><span>Style</span><span id="o-style"></span></div>
+  <div class="row"><span>Phone model</span><span id="o-model"></span></div>
+  <div class="row"><span>Text</span><span id="o-name"></span></div>
+  <div class="row"><span>Cover price</span><span id="o-price"></span></div>
+  <div class="row"><span>Rush fee</span><span id="o-rush"></span></div>
+  <div class="row total"><span><b>Total</b></span><span id="o-total"></span></div>
+  <div class="row"><span>Advance to confirm (30%) via Easypaisa or JazzCash</span><span id="o-adv"></span></div>
+  <div class="row"><span>Balance on delivery (delivery charged by courier)</span><span id="o-bal"></span></div>
+  <div class="btns">
+    <a class="btn p" id="wa" href="#" target="_blank" rel="noopener">Order on WhatsApp</a>
+    <button class="btn s" id="copy" type="button">Copy order details</button>
+  </div>
+  <p class="msg" id="msg" role="status"></p>
+  <pre id="txt"></pre>
+</section>
+<footer>Rangeela Covers &bull; Custom name, calligraphy and hand-painted phone covers &bull; Delivery across Pakistan</footer>
+</div>
+
+<script>
+var STYLES=[
+ {id:'name',n:'Name cover',p:800,d:'Marker or paint lettering'},
+ {id:'cal',n:'Calligraphy cover',p:1100,d:'Urdu or Arabic calligraphy'},
+ {id:'art',n:'Hand-painted art',p:1800,d:'Floral, abstract or truck art'},
+ {id:'sticker',n:'Sticker / vinyl design',p:1000,d:'Anime, cricket, aesthetic'},
+ {id:'couple',n:'Couple set (2 covers)',p:2200,d:'Matching pair'},
+ {id:'sub',n:'Sublimation print',p:1200,d:'Photo-quality print'}
+];
+var MODELS=['Samsung A-series','Infinix','Tecno','Vivo','Oppo','iPhone','Other (we will confirm)'];
+var COLORS=[['#FFF8E7','Cream'],['#C2185B','Magenta'],['#00796B','Teal'],['#F57C00','Orange'],['#2B1B2E','Midnight']];
+var st={style:'name',color:'#FFF8E7',rush:false};
+var $=function(i){return document.getElementById(i)};
+function rs(n){return 'Rs. '+n.toLocaleString('en-PK')}
+function light(c){return c==='#FFF8E7'}
+function build(){
+  var s=$('styles');
+  STYLES.forEach(function(x){var b=document.createElement('button');b.type='button';b.className='opt';b.dataset.id=x.id;
+    b.innerHTML='<b>'+x.n+'</b><small>'+rs(x.p)+' &middot; '+x.d+'</small>';
+    b.onclick=function(){st.style=x.id;render()};s.appendChild(b)});
+  MODELS.forEach(function(m){var o=document.createElement('option');o.textContent=m;$('model').appendChild(o)});
+  COLORS.forEach(function(c){var b=document.createElement('button');b.type='button';b.style.background=c[0];b.title=c[1];b.setAttribute('aria-label',c[1]);b.dataset.c=c[0];
+    b.onclick=function(){st.color=c[0];render()};$('sw').appendChild(b)});
+  $('name').oninput=render;$('model').onchange=render;$('rush').onchange=function(){st.rush=this.checked;render()};
+  $('copy').onclick=copy;
+}
+function coverHTML(small,variant){
+  var c=variant||st.color,fg=light(c)?'#C2185B':'#FFF8E7',acc=light(c)?'#00796B':'#F57C00';
+  var name=$('name').value||'Your name',deco='',txt='',sty=st.style;
+  var flower='<g fill="'+fg+'"><circle cy="-30" r="20"/><circle cx="26" cy="-15" r="20"/><circle cx="26" cy="15" r="20"/><circle cy="30" r="20"/><circle cx="-26" cy="15" r="20"/><circle cx="-26" cy="-15" r="20"/></g><circle r="18" fill="'+acc+'"/>';
+  if(sty==='name'){txt='<div class="txt" style="color:'+fg+';font-size:30px">'+esc(name)+'</div><div class="deco"><div style="position:absolute;left:30px;right:30px;top:62%;height:5px;border-radius:3px;background:'+acc+'"></div></div>'}
+  if(sty==='cal'){txt='<div class="txt" style="color:'+fg+';font-size:36px;font-family:\'Noto Nastaliq Urdu\',Georgia,serif;font-style:italic;font-weight:400">'+esc(name)+'</div><div class="deco"><div style="position:absolute;left:20px;right:20px;bottom:30px;height:2px;background:'+acc+'"></div><div style="position:absolute;left:20px;right:20px;top:75px;height:2px;background:'+acc+'"></div></div>'}
+  if(sty==='art'){deco='<svg class="deco" viewBox="0 0 150 300"><g transform="translate(75,170)">'+flower+'</g><g transform="translate(30,250) scale(.5)">'+flower+'</g><g transform="translate(125,95) scale(.4)">'+flower+'</g></svg>';txt='<div class="txt" style="color:'+fg+';font-size:20px;top:84%">'+esc(name)+'</div>'}
+  if(sty==='sticker'){deco='<svg class="deco" viewBox="0 0 150 300"><polygon points="75,90 87,128 127,128 95,152 107,190 75,166 43,190 55,152 23,128 63,128" fill="'+acc+'"/><circle cx="35" cy="240" r="14" fill="'+fg+'"/><rect x="95" y="225" width="30" height="30" rx="8" fill="'+fg+'"/></svg>';txt='<div class="txt" style="color:'+fg+';font-size:22px;top:84%">'+esc(name)+'</div>'}
+  if(sty==='couple'){txt='<div class="txt" style="color:'+fg+';font-size:28px">'+esc(name)+'</div>'; deco='<svg class="deco" viewBox="0 0 150 300"><path d="M75 230c-30-22-44-38-44-54a22 22 0 0 1 44-6 22 22 0 0 1 44 6c0 16-14 32-44 54z" fill="'+acc+'"/></svg>'}
+  if(sty==='sub'){return '<div class="cover'+(small?' small':'')+'" style="background:linear-gradient(160deg,#F57C00,#C2185B 45%,#2B1B2E)"><div class="cam"></div><svg class="deco" viewBox="0 0 150 300"><circle cx="40" cy="190" r="50" fill="#FFF8E7" opacity=".18"/><circle cx="110" cy="230" r="60" fill="#00796B" opacity=".5"/><path d="M0 250 Q75 190 150 250 V300 H0z" fill="#2B1B2E" opacity=".5"/></svg><div class="txt" style="color:#FFF8E7;font-size:22px;top:45%">'+esc(name)+'</div></div>'}
+  return '<div class="cover'+(small?' small':'')+'" style="background:'+c+'"><div class="cam"></div>'+deco+txt+'</div>';
+}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function cur(){return STYLES.filter(function(x){return x.id===st.style})[0]}
+function render(){
+  document.querySelectorAll('#styles .opt').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.id===st.style)});
+  document.querySelectorAll('#sw button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.c===st.color)});
+  var couple=st.style==='couple',other=st.color==='#FFF8E7'?'#C2185B':'#FFF8E7';
+  $('stage').innerHTML=couple?coverHTML(true)+coverHTML(true,other):coverHTML(false);
+  $('hint').textContent=cur().n+' for '+$('model').value;
+  var x=cur(),rush=st.rush?150:0,total=x.p+rush,adv=Math.round(total*0.3),name=$('name').value||'-';
+  $('o-style').textContent=x.n;$('o-model').textContent=$('model').value;$('o-name').textContent=name;
+  $('o-price').textContent=rs(x.p);$('o-rush').textContent=rush?rs(rush):'None';
+  $('o-total').textContent=rs(total);$('o-adv').textContent=rs(adv);$('o-bal').textContent=rs(total-adv);
+  var colName=COLORS.filter(function(c){return c[0]===st.color})[0][1];
+  var t='Rangeela Covers order\nStyle: '+x.n+'\nPhone: '+$('model').value+'\nText: '+name+'\nColour: '+colName+'\nRush: '+(st.rush?'Yes (+Rs. 150)':'No')+'\nTotal: '+rs(total)+'\nAdvance (30%): '+rs(adv)+'\nDelivery address: ';
+  $('txt').textContent=t;
+  $('wa').href='https://wa.me/?text='+encodeURIComponent(t);
+}
+function copy(){
+  var t=$('txt').textContent,m=$('msg');
+  function ok(){m.textContent='Order details copied. Paste them into WhatsApp and add your address.'}
+  function no(){var r=document.createRange();r.selectNodeContents($('txt'));var s=getSelection();s.removeAllRanges();s.addRange(r);m.textContent='Select and copy the text below.'}
+  try{navigator.clipboard.writeText(t).then(ok,no)}catch(e){no()}
+}
+build();render();
+</script>
+
+</body>
+</html>
